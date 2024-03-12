@@ -51,6 +51,8 @@ class SQLBrain(KnowledgeBrainQA, IntegrationBrain):
         self.db = SQLDatabase.from_uri(self.sql_connector.credentials["uri"])
 
         api_base = None
+        if self.brain_settings.openai_api_base_url:
+            api_base = self.brain_settings.openai_api_base_url
         if self.brain_settings.ollama_api_base_url and self.model.startswith("ollama"):
             api_base = self.brain_settings.ollama_api_base_url
 

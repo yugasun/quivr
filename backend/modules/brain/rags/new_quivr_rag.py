@@ -88,7 +88,9 @@ class QuivrRAG(BaseModel):
                 base_url=self.brain_settings.ollama_api_base_url
             )  # pyright: ignore reportPrivateUsage=none
         else:
-            return OpenAIEmbeddings()
+            return OpenAIEmbeddings(
+                base_url=self.brain_settings.openai_api_base_url
+            )
 
     @property
     def prompt_to_use(self):
@@ -165,6 +167,8 @@ class QuivrRAG(BaseModel):
             )
 
         api_base = None
+        if self.brain_settings.openai_api_base_url:
+            api_base = self.brain_settings.openai_api_base_url
         if self.brain_settings.ollama_api_base_url and model.startswith("ollama"):
             api_base = self.brain_settings.ollama_api_base_url
 

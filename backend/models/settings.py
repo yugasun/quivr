@@ -106,6 +106,7 @@ class PostHogSettings(BaseSettings):
 class BrainSettings(BaseSettings):
     model_config = SettingsConfigDict(validate_default=False)
     openai_api_key: str = ""
+    openai_api_base_url: str = ""
     supabase_url: str = ""
     supabase_service_key: str = ""
     resend_api_key: str = "null"
@@ -140,7 +141,9 @@ def get_embeddings():
             base_url=settings.ollama_api_base_url,
         )  # pyright: ignore reportPrivateUsage=none
     else:
-        embeddings = OpenAIEmbeddings()  # pyright: ignore reportPrivateUsage=none
+        embeddings = OpenAIEmbeddings(
+            base_url=self.brain_settings.openai_api_base_url
+        )  # pyright: ignore reportPrivateUsage=none
     return embeddings
 
 
